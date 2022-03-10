@@ -1,2 +1,2 @@
 print('hello')
-print('push')
+print('check')
