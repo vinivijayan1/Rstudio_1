@@ -29,13 +29,13 @@ brexit_data$Leave[brexit_data$Leave == -1] <- NA
 sum(brexit_data$Leave[brexit_data$Leave == -1])
 
 # View the records with NA
-na_records <- brexit_data[!complete.cases(brexit_data),]
-na_records
+(na_records <- brexit_data[!complete.cases(brexit_data),])
+#na_records
 
 # Same count as when values were -1
 nrow(na_records)
 
-install.packages("mice")
+#install.packages("mice")
 library(mice)
 # 15 records have missing NI address
 # 10 have missing type
@@ -84,6 +84,7 @@ brexit_data$RegionName[RegionName == "West Midlands"] <- "WM"
 brexit_data$RegionName[RegionName == "East of England"] <- "EE" 
 brexit_data$RegionName[RegionName == "Yorkshire and The Humber"] <- "Y" 
 
+View(brexit_data)
 # Now we have a new variable of interest called proportion
 # and we will now focus on this variable
 
@@ -101,9 +102,42 @@ is.numeric(brexit_data$Proportion)
 is.numeric(brexit_data$RegionName)
 
 # Use double-tab for structure of sapply()
-numeric_variable_list <- sapply(brexit_data, is.numeric)
-numeric_variable_list
+(numeric_variable_list <- sapply(brexit_data, is.numeric))
+#numeric_variable_list
 
 # We can use this logic to create a subset of the data
 numerical_data <- brexit_data[numeric_variable_list]
 colnames(numerical_data)
+
+
+numeric_variable_list['ID']<-FALSE
+
+numerical_data <- brexit_data[numeric_variable_list]
+colnames(numerical_data)
+
+(columnbind_numerical_summary<-do.call(cbind,lapply(numerical_data, summary)))
+
+(rowbind_numerical_summary<-do.call(rbind,lapply(numerical_data, summary)))
+View(rowbind_numerical_summary)
+
+x<-(numerical_summary['Max.','Proportion'])
+(numerical_summary['Min.','Deprived'])
+
+y<-(numerical_summary['Min.','Proportion'])
+(r<-x-y)
+
+(display_name<-c('NoQuals','Proportion','AdultMeanAge','L4Quals_plus','RegionName'))
+(loc<-which.max(brexit_data$Proportion))
+brexit_data[loc,display_name]
+
+(loc1<-which.min(brexit_data$Proportion))
+brexit_data[loc1,]
+View(prop.table(table(brexit_data$RegionName)))
+
+#barplot
+
+(h<-prop.table(table(brexit_data$RegionName)))
+barplot(height=h, 
+        main ='bar chart',
+        ylab='frequency',
+        xlab='RegionName')
